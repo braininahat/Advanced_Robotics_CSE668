@@ -16,7 +16,7 @@ uniform = 1/float(side*side)
 
 world[:,:] = uniform
 
-hit = 0.75
+hit = 0.75	
 miss = 0.25
 
 ranges = open('Given/ranges1.dat', 'r')
@@ -25,7 +25,7 @@ ranges =  ranges.split('\r\n')
 ranges = [float(i) for i in ranges[2:]]
 
 
-def sense():
+def beam_observe():
 	global world, ranges
 	hypt = ranges.pop(0)
 	for theta in range(side):
@@ -38,15 +38,15 @@ def sense():
 	world[:,:] /= float(norm)
 
 
-def move():
+def motion():
 	global world
 	world = np.roll(world, 23, axis=0) #rotate by 23 degrees every 0.2s
 
 
 def main():
 	while(ranges):
-		sense()
-		move()
+		beam_observe()
+		motion()
 	ax.plot_wireframe(x,y,world)
 	plt.show()
 
