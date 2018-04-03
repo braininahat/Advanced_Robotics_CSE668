@@ -24,8 +24,6 @@ tag_z = []
 
 
 for topic, msg, t in read:
-	# msg_count+=1
-	# if (msg_count%2)==0:
 	if topic == "/odom":
 		buffered = msg
 	elif topic == "/tag_detections":
@@ -52,35 +50,6 @@ kmeans = KMeans(n_clusters=len(tag_ids)).fit(tag_coords)
 tag_coords = pd.DataFrame(kmeans.cluster_centers_)
 tag_x = tag_coords.iloc[:,0]
 tag_z = tag_coords.iloc[:,1]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 	msg_count += 1
-# 	if (msg_count % 100)==0:
-# 		#print "Topic ",topic,"\n\n", "Message ", msg, "\n\n", "Timestamp ", t, "\n\n\n"
-# 		if topic == "/odom":
-# 			odom_x.append(msg.pose.pose.position.x)
-# 			odom_y.append(msg.pose.pose.position.y)
-# 	if topic == "/tag_detections":
-# 		for detection in msg.detections:
-# 			tag_x.append(detection.pose.pose.position.x)
-# 			tag_y.append(detection.pose.pose.position.y)
-# 			tag_z.append(detection.pose.pose.position.z)
-
 
 odom_x = pd.Series(odom_x)
 odom_y = pd.Series(odom_y)
