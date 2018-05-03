@@ -3,10 +3,11 @@ import cv2 as cv
 import time
 from picamera.array import PiRGBArray
 from picamera import PiCamera
-
 import socket
 
-client_socket = scoket.socket()
+client_socket = socket.socket()
+client_socket.connect(("pranavs-mbp",5000))
+
 camera = PiCamera()
 camera.resolution = (640, 480)
 camera.framerate = 32
@@ -29,15 +30,20 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
     # compute the descriptors with ORB
     kp, des = orb.compute(img, kp)
+    print kp
+    print des
+    print "\n"
+    client_socket.send(str(des))
 
     # draw only keypoints location,not size and orientation
     img2 = cv.drawKeypoints(img, kp, None, color=(0,255,0), flags=0)
     cv.imshow("ORB features", img2)
     key = cv.waitKey(1) & 0xFF
-    
+
     # clear the stream in preparation for the next frame
     rawCapture.truncate(0)
 
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
         break
+
