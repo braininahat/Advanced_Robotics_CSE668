@@ -60,7 +60,7 @@ for frame in camera.capture_continuous(rawCapture,
         cv2.drawChessboardCorners(gray, (7, 6), corners2, ret)
         cv2.imshow('img', gray)
         cv2.waitKey(1)
-        ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints,
+        rms, camera_matrix, dist_coeffs, rvecs, tvecs = cv2.calibrateCamera(objpoints,
                                                            imgpoints,
                                                            gray.shape[::-1],
                                                            None,
@@ -73,5 +73,6 @@ for frame in camera.capture_continuous(rawCapture,
     rawCapture.truncate(0)
     if count == 30:
         break
+    print(count)
 
 cv2.destroyAllWindows()
