@@ -60,19 +60,27 @@ for frame in camera.capture_continuous(rawCapture,
         cv2.drawChessboardCorners(gray, (7, 6), corners2, ret)
         cv2.imshow('img', gray)
         cv2.waitKey(1)
-        rms, camera_matrix, dist_coeffs, rvecs, tvecs = cv2.calibrateCamera(objpoints,
-                                                           imgpoints,
-                                                           gray.shape[::-1],
-                                                           None,
-                                                           None)
-        print("\n", ret)
-        print("\n", mtx)
-        print("\n", dist)
-        print("\n", rvecs)
-        print("\n", tvecs)
+
     rawCapture.truncate(0)
+
+    print(count)
+
     if count == 30:
         break
-    print(count)
+
+rms, camera_matrix, dist_coeffs, rvecs, tvecs = cv2.calibrateCamera(objpoints,
+                                                                    imgpoints,
+                                                                    gray.shape[::-1],
+                                                                    None,
+                                                                    None)
+
+print("\nrms\n", rms)
+print("\ncamera_matrix\n", camera_matrix)
+print("\ndist_coeffs\n", dist_coeffs)
+print("\nrvecs\n", rvecs)
+print("\ntvecs\n", tvecs)
+
+# dist_coeffs gives k1 k2 p1 p2
+# camera matrix 00 is fx 11 is fy 20 p1 21 p2 (maybe)
 
 cv2.destroyAllWindows()
