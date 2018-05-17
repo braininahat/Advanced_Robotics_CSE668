@@ -45,16 +45,18 @@ def main(vocab_path, settings_path):
             image_stream.seek(0)
             file_bytes = np.asarray(bytearray(image_stream.read()), dtype=np.uint8)
             image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+            print(image)
 
             tframe = time()
 
             if image is None:
                 print("Failed to load image\n")
-            return 1
+                return 1
 
             slam.process_image_mono(image, tframe)
 
     finally:
+        print("Entered")
         slam.shutdown()
         connection.close()
         server_socket.close()
